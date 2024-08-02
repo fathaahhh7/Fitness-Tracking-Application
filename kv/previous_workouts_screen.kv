@@ -1,0 +1,63 @@
+<PreviousWorkoutsScreen>:
+    FloatLayout:
+        on_touch_down:
+        #backgroung press hides checkboxes
+            caller = args[0]
+            touch = args[1]
+            if touch.spos[1]>0.92 and touch.spos[0]>0.2: root.show_checkbox("False")
+            if touch.spos[1]>0.83 and touch.spos[1]<0.92 and touch.spos[0]<0.77: root.show_checkbox("False")
+
+
+
+
+        MDLabel:
+            id: month_to_view
+            pos_hint: {"center_x": 0.57, "top":1.0}
+            size_hint: (1, .2)
+            font_style: "H4"
+            text: "Jul"
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+
+        MDGridLayout:
+            id: icon_grid
+            cols:2
+            rows:1
+            pos_hint: {"center_x": 0.78, "center_y":0.895}
+            size_hint_x:0.4
+            size_hint_y:0.08
+            spacing:0
+            MDLabel:
+                id: num_to_delete
+                font_style: "Subtitle1"
+                text: "5"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                halign:'right'
+                valign:'center'
+
+            MDIconButton:
+                id: help_button
+                icon: "trash-can-outline"
+                user_font_size: "30dp"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                on_release: root.help_button(self.icon)
+                halign:'left'
+                valign:'center'
+                size_hint:0.4,0.1
+        ScrollView:
+            id: sessions_scroll
+            pos_hint: {"top": .86}
+            size_hint_y: None
+            size_hint: 1, .86
+            GridLayout:
+                # sets_grid
+                id: sessions_grid
+                cols: 1
+                spacing: 20,25
+                size_hint_y: None
+                height: self.minimum_height
+                row_force_default: True
+                row_default_height: '75dp'
+                padding:20

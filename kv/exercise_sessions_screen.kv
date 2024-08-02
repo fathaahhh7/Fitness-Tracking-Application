@@ -1,0 +1,55 @@
+<ExerciseSessionsScreen>:
+    FloatLayout:
+        AnchorLayout:
+            pos_hint: {"center_x": 0.572, "center_y": .525}
+            anchor_x:'left'
+            anchor_y:'top'
+            MDLabel:
+                id: exc_name
+                size_hint: (1, .2)
+                font_style: "H4"
+                text: root.exercise
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+
+        MDIconButton:
+            pos_hint: {"center_x": .88, "top": .97}
+            icon: "chart-line"
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+            size_hint: 0.2,0.1
+            on_release:
+                app.stats_to_exercise_mode()
+
+                app.change_screen1("exercise_stats_screen")
+
+        MDLabel:
+            id:date_label
+            pos_hint: {"x": -0.03, "y": .74}
+            size_hint: (.7, .2)
+            halign: "center"
+            text: "Previous sessions, Dec"
+            user_font_size: "30sp"
+            theme_text_color: "Secondary"
+
+        MDIconButton:
+            pos_hint: {"center_x": .875, "top": .88}
+            icon: "tune"
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            on_release: root.choose_date()
+
+        ScrollView:
+            id: sessions_scroll
+            pos_hint: {"top": 0.82}
+            size_hint_y: None
+            size_hint: 1, .82
+            GridLayout:
+                # sets_grid
+                id: sets_grid
+                cols: 1
+                spacing: 20,35
+                size_hint_y: None
+                height: self.minimum_height
+                row_force_default: True
+                row_default_height: '150dp'

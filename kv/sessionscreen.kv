@@ -1,0 +1,250 @@
+<AddExerciseContent>
+    orientation: "vertical"
+    spacing: "20dp"
+    size_hint_y: None
+    height: "33dp"
+
+    MDTextField:
+        hint_text: "Exercise name"
+        required: True
+        helper_text_mode: "on_error"
+        helper_text: "Enter text"
+        input_filter: app.proper_input_filter
+        on_text: app.text_input_length_filter(self, self.text, 16)
+
+
+
+
+
+
+<SessionScreen>:
+
+    FloatLayout:
+        on_touch_down:
+        #backgroung press hides checkboxes
+            caller = args[0]
+            touch = args[1]
+#            print(touch.spos)
+            if touch.spos[1]>0.92 and touch.spos[0]>0.2: root.show_checkbox("False")
+            if touch.spos[1]>0.83 and touch.spos[1]<0.92 and touch.spos[0]<0.77: root.show_checkbox("False")
+#            if touch.spos[1]>0.8: root.fix_grid_heights()
+
+#            caller_touched = caller.collide_point(*touch.pos)
+#            spawn_touched = [x.collide_point(*touch.pos) for x in self.walk(restrict = True) if x is not self]
+#            print('caller -> {0}\ntouch -> {1}'.format(caller, touch))
+#            ## Do stuff if touched and none of the spawn have been touched
+#            if caller_touched and True not in spawn_touched: print('caller -> {0}\ntouch -> {1}'.format(caller, touch))
+
+
+        GridLayout:
+            id: control_grid
+            cols:4
+            pos_hint: {"center_x": .5, "top": .12 - app.bottom_buttons_inc}
+            size_hint_y:0.1
+
+
+
+            MDIconButton:
+                id: date_picker_icon
+                icon: "calendar"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                user_font_size: "44sp"
+                halign: "center"
+                on_release: root.show_example_date_picker()
+                size_hint: (0.01,2)
+
+            MDIconButton:
+                id: add_exc
+                icon: "plus"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                user_font_size: "44sp"
+                halign: "center"
+                on_release: root.show_add_exercise_dialog()
+                size_hint: (0.01,2)
+
+            MDIconButton:
+                icon: "arrow-down-bold-box-outline"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                user_font_size: "44sp"
+                halign: "center"
+                id: load_session
+                on_release: root.reload_previous_session()
+                size_hint: (0.01,2)
+
+            MDIconButton:
+                icon: "content-save"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                user_font_size: "44sp"
+                size_hint: (0.01,2)
+                on_release: root.save_session()
+
+            MDLabel:
+                id: date_picker_label
+                text: "12/12/12"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                halign: "center"
+
+            MDLabel:
+                text: "Exercise"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                halign: "center"
+
+            MDLabel:
+                text: "Load"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                halign: "center"
+
+            MDLabel:
+                text: "Save"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                halign: "center"
+
+        MDLabel:
+            id: workout_name
+            pos_hint: {"center_x": 0.28, "top": .945+root.inc}
+            size_hint: (.5, .15)
+            font_size: "35sp"
+            halign: "left"
+            text: ""
+            opacity:1
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+        MDIcon:
+            id: date_icon
+            pos_hint: {"center_x": 0.84, "top": .97+root.inc}
+            size_hint: (.5, .15)
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+            icon: "calendar"
+            user_font_size: "50sp"
+
+        MDLabel:
+            id: date_view
+            pos_hint: {"center_x": 0.93, "top": .97+root.inc}
+            size_hint: (.5, .15)
+            font_size: "22sp"
+            halign: "left"
+            text: ""
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+
+        MDLabel:
+            id: timer
+            pos_hint: {"center_x": 0.93, "top": .93+root.inc}
+            size_hint: (.5, .15)
+            font_size: "22sp"
+            halign: "left"
+            text: app.timer_format
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+
+        MDLabel:
+            id: timer_view
+            pos_hint: {"center_x": 0.93, "top": .93+root.inc}
+            size_hint: (.5, .15)
+            font_size: "22sp"
+            halign: "left"
+            text: ""
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+
+        MDIcon:
+            icon: "clock-outline"
+            pos_hint: {"center_x": 0.84, "top": .93+root.inc}
+            size_hint: (.5, .15)
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+            user_font_size: "50sp"
+
+        MDGridLayout:
+            cols:2
+            rows:1
+            pos_hint: {"center_x": 0.71, "center_y":0.95}
+            size_hint_x:0.4
+            size_hint_y:0.08
+            spacing:0
+
+            MDLabel:
+                id: num_to_delete
+                font_style: "Subtitle1"
+                halign: "right"
+                text: ""
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+
+            MDIconButton:
+                id: show_checkbox
+                icon: "trash-can-outline"
+                user_font_size: "32sp"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                on_release: root.delete_selected()
+                size_hint:0.4,0.1
+
+
+#        MDIconButton:
+#            id: start_exc
+#            user_font_size: "45sp"
+#            pos_hint: {"center_x": .5, "top": .15}
+#            icon: "play"
+#            theme_text_color: "Custom"
+#            text_color: app.theme_cls.primary_color
+#            on_release: root.start_session()
+
+        ScrollView:
+            id: scroll
+            pos_hint: {"top": .8725}
+            size: self.size
+            size_hint: 1., .72 + app.bottom_buttons_inc
+            GridLayout:
+                # Banner grid
+                id: exc_cards
+                cols: 1
+                spacing: 20,0
+                size_hint_y: None
+                height: self.minimum_height
+                row_force_default: True
+                row_default_height: '175dp'
+#            ThreeLineListItem:
+#                text: "Three-line item"
+#                secondary_text: "This is a multi-line label where you can"
+#                tertiary_text: "fit more text than usual"
+#                on_release: print("Click 2!")
+#
+#            ThreeLineListItem:
+#                text: "Three-line item"
+#                secondary_text: "This is a multi-line label where you can"
+#                tertiary_text: "fit more text than usual"
+#                on_release: print("Click 2!")
+#
+#            ThreeLineListItem:
+#                text: "Three-line item"
+#                secondary_text: "This is a multi-line label where you can"
+#                tertiary_text: "fit more text than usual"
+#                on_release: print("Click 2!")
+#
+#            ThreeLineListItem:
+#                text: "Three-line item"
+#                secondary_text: "This is a multi-line label where you can"
+#                tertiary_text: "fit more text than usual"
+#                on_release: print("Click 2!")
+#
+#
+#            ThreeLineListItem:
+#                text: "Three-line item"
+#                secondary_text: "This is a multi-line label where you can"
+#                tertiary_text: "fit more text than usual"
+#                on_release: print("Click 2!")

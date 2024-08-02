@@ -1,0 +1,96 @@
+#:import toast kivymd.toast.toast
+
+
+
+<WorkoutsScreen>:
+    FloatLayout:
+
+#        MDRoundFlatIconButton:
+#            icon: "plus"
+#            pos_hint: {"center_x": 0.3, "top": .95}
+#            text: "Create New Workout"
+#            width: dp(200)
+#            theme_text_color: "Primary"
+#            text_color: 1,1,1,1
+#
+#            on_release:
+#                app.show_create_workout_dialog()
+
+
+#        MDRoundFlatIconButton:
+#            icon: "run"
+#            id: running_session
+#            pos_hint: {"center_x": 0.8, "top": .95}
+#            text: "Create"
+#            width: dp(90)
+#            theme_text_color: "Primary"
+#            text_color: 1,1,1,1
+#
+#            opacity: 0
+#            on_release:
+#                app.back_to_running_session()
+
+        GridLayout:
+            id: edit_grid
+            cols:1
+            pos_hint: {"center_x": .82, "top": .98}
+            size_hint_y:0.1
+            size_hint_x:0.3
+
+            MDIconButton:
+                id: running_session_label
+                icon: "run"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                user_font_size: "35sp"
+                halign: "center"
+                size_hint: (0.0001,2)
+                on_release:
+                    app.back_to_running_session()
+            MDLabel:
+                text: "Home Workout"
+                id: running_session
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                halign: "center"
+
+        GridLayout:
+            id: edit_grid
+            cols:1
+            pos_hint: {"center_x": .5, "top": .98}
+            size_hint_y:0.1
+            size_hint_x:0.3
+
+            MDIconButton:
+                icon: "plus"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                user_font_size: "44sp"
+                halign: "center"
+                id: load_session
+                size_hint: (0.0001,2)
+                on_release:
+                    app.show_create_workout_dialog()
+            MDLabel:
+                text: "New Workout"
+
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_style: "Caption"
+                halign: "center"
+
+        ScrollView:
+            pos_hint: {"top": .861}
+            size_hint_y: None
+            size_hint: 1, 0.85
+            GridLayout:
+                # Banner grid
+                id: banner_grid
+                cols: 1
+                spacing: 20,10
+                size_hint_y: None
+                height: self.minimum_height
+                row_force_default: True
+                row_default_height: '350dp'
+

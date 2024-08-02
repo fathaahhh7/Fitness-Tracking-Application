@@ -1,0 +1,411 @@
+<ExerciseStatsScreen>:
+    FloatLayout:
+
+        id: stats_layout
+
+        GridLayout:
+            id: buttons_layout
+            cols: 3
+            pos_hint: {"center_x": 0.5, "top": .87}
+            size_hint_y:0.1
+            size_hint_x:0.7
+
+#            spacing: 15
+            MDIconButton:
+                id: left_arrow
+                icon: "chevron-left"
+                user_font_size: "40sp"
+                theme_text_color: "Custom"
+                text_color: 0.5,0.5,0.5,1
+                size_hint: (0.5,0.075)
+                on_release: root.switch_date(*args)
+
+            MDLabel:
+                id: curr_label
+                text: "Sep"
+                font_style: "H6"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": 0.63}
+
+            MDIconButton:
+                id: right_arrow
+                icon: "chevron-right"
+                user_font_size: "40sp"
+                theme_text_color: "Custom"
+                text_color: 0.5,0.5,0.5,1
+                on_release: root.switch_date(*args)
+                size_hint: (0.5,0.075)
+
+        MDTabs:
+            id: md_tabs
+            pos_hint: {"center_x": 0.79, "top": 0.95}
+            background_color: 0, 0, 0, 0
+            text_color_normal: app.tabs_text_color_normal
+            text_color_active: app.tabs_text_color_active
+            color_indicator: app.tabs_color_indicator
+#            background_color: 0, 0, 0, 0
+#            text_color_normal: 1, 1, 1, 1
+#            text_color_active: app.theme_cls.primary_color
+#            color_indicator:  app.theme_cls.primary_color
+            allow_stretch: False
+            spacing:100
+            tab_indicator_anim: True
+            on_tab_switch: print(3)
+            opacity:1
+            on_tab_switch: root.on_tab_switch(*args)
+            size_hint_y:0.1
+
+            Tab:
+                text: '[size=' + str(int(0.9*app.headline_text_size))+']Year[/size]'
+
+            Tab:
+                text: '[size=' + str(int(0.9*app.headline_text_size))+']Month[/size]'
+
+        MDCard:
+            id: no_data
+            elevation: 1
+            radius:[80]
+            orientation: "vertical"
+            padding: "16dp"
+            size_hint: None, None
+            size: "240dp", "110dp"
+            pos_hint: {"center_x": .5, "center_y": 0.3}
+            background : "resources/loginback1.png"
+            opacity:0
+
+            MDLabel:
+                text: "No data available"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                size_hint_y: None
+                font_style:"H5"
+                halign:'center'
+                pos_hint: {"center_x": .5, "center_y": 0.5}
+                size_hint_y: 0.75
+
+        MDCard:
+            id: current_weight_card
+            elevation: 0
+            radius:[80]
+            orientation: "vertical"
+            padding: "16dp"
+            size_hint: None, None
+            size: "185dp", "120dp"
+            pos_hint: {"center_x":0.25,"y": .6}
+            background : "resources/loginback1.png"
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint_y: 0.4
+                MDLabel:
+                    id: current_weight_label
+                    text: "Current Weight"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+
+            MDSeparator:
+                height: "1dp"
+                color:1,1,1,1
+
+            GridLayout:
+                cols:2
+                rows:2
+                MDLabel:
+                    id: current_weight
+                    theme_text_color: "Primary"
+                    text: "0"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"H4"
+                    halign:'center'
+
+                MDLabel:
+                    id: current_weight_date
+                    text: "Overall Best"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"Caption"
+                    size_hint_y: None
+                    size_hint_x: 0.3
+                    height: self.texture_size[1]
+                    halign:'center'
+
+                MDLabel:
+                    id: current_weight_unit
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    text: " Reps"
+                    font_style:"Caption"
+                    size_hint_y:None
+                    height:20
+                    halign:'center'
+
+                MDLabel:
+                    id: nothing
+                    text: ""
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"Caption"
+                    size_hint_y: None
+                    size_hint_x: 0.3
+                    height: self.texture_size[1]
+        MDCard:
+            id: avg_weight_card
+            elevation: 0
+            radius:[80]
+            orientation: "vertical"
+            padding: "16dp"
+            size_hint: None, None
+            size: "185dp", "120dp"
+            pos_hint: {"center_x":0.75,"y": .6}
+            background : "resources/loginback1.png"
+            BoxLayout:
+                orientation:'horizontal'
+                size_hint_y: 0.4
+                MDLabel:
+                    id: avg_weight_label
+                    text: "Avg. Weight"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+
+            MDSeparator:
+                height: "1dp"
+                color:1,1,1,1
+
+            GridLayout:
+                cols:2
+                rows:2
+                MDLabel:
+                    id: average_weight
+                    theme_text_color: "Primary"
+                    text: "0"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"H4"
+                    halign:'center'
+
+                MDLabel:
+                    id: average_weight_period
+                    text: "for Sep 2020"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"Caption"
+                    size_hint_y: None
+                    size_hint_x: 0.3
+                    height: self.texture_size[1]
+                    halign:'center'
+
+                MDLabel:
+                    id: average_weight_unit
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    text: " Reps"
+                    font_style:"Caption"
+                    size_hint_y:None
+                    height:20
+                    halign:'center'
+
+                MDLabel:
+                    id: nothing
+                    text: ""
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
+                    font_style:"Caption"
+                    size_hint_y: None
+                    size_hint_x: 0.3
+                    height: self.texture_size[1]
+
+        ScrollView:
+            id: records_scroll
+            pos_hint: {"y": .58}
+            size_hint_y: None
+            size_hint_x: None
+            size_hint: 1, .18
+            do_scroll_y: False
+            do_scroll_x: True
+            scroll_type:['content']
+            bar_color: [0,0,0,0]
+            bar_inactive_color:[0,0,0,0]
+            GridLayout:
+                # sets_grid
+                id: records_grid
+                cols: 2
+                rows: 1
+                padding: 30,0
+                spacing: 20,20
+                size_hint_y: None
+                size_hint_x: None
+                height: self.minimum_height
+                width: self.minimum_width
+                row_force_default: True
+                row_default_height: '125dp'
+
+                MDCard:
+                    elevation: 5
+                    radius:[80]
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint: None, None
+                    size: "190dp", "110dp"
+                    pos_hint:{"center_y": 0.5, "center_x": 0.5}
+                    background : "resources/loginback1.png"
+                    BoxLayout:
+                        orientation:'horizontal'
+                        size_hint_y: 0.4
+                        MDLabel:
+                            id: record
+                            text: "Overall Best"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H6"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            id: record_date
+                            text: "Overall Best"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"Caption"
+                            size_hint_y: None
+                            size_hint_x: 0.3
+                            height: self.texture_size[1]
+
+                    MDSeparator:
+                        height: "1dp"
+                        color:1,1,1,1
+
+                    GridLayout:
+                        cols:3
+                        rows:2
+                        MDLabel:
+                            id: best_reps
+                            theme_text_color: "Primary"
+                            text: "0"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H5"
+
+                        MDLabel:
+                            id: best_x_label
+                            theme_text_color: "Primary"
+                            text: "X"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H5"
+
+                        MDLabel:
+                            id: best_weight
+                            text: "120.78"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H5"
+                            size_hint_x: 2
+
+                        MDLabel:
+                            id: best_reps_unit
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            text: " Reps"
+                            font_style:"Caption"
+                            size_hint_y:None
+                            height:20
+                        MDLabel:
+                            id: best_weight_mode_unit
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            text: ""
+                            font_style:"Caption"
+                            size_hint_y:None
+                            height:20
+                        MDLabel:
+                            id: weight_unit
+                            text: " Kg"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"Caption"
+                            size_hint_y:None
+                            height:20
+                MDCard:
+                    id: monthly_record_card
+                    elevation: 0
+                    radius:[80]
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint: None, None
+                    size: "190dp", "110dp"
+                    pos_hint:{"center_y": 0.5, "center_x": 0.5}
+                    background : "resources/loginback1.png"
+
+                    MDLabel:
+                        text: "Overall Best"
+                        id: best_month_title
+                        theme_text_color: "Custom"
+                        text_color: 1,1,1,1
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        font_style:"H6"
+
+                    MDSeparator:
+                        height: "1dp"
+                        color:1,1,1,1
+
+                    GridLayout:
+                        cols:3
+                        rows:2
+
+                        MDLabel:
+                            id: best_month_reps
+                            text: "0"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H5"
+
+                        MDLabel:
+                            id: monthly_x_label
+                            text: "X"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H5"
+
+                        MDLabel:
+                            id: best_month_weight
+                            text: "120.78"
+                            size_hint_x: 2
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"H5"
+                            size_hint_x: 2
+
+                        MDLabel:
+                            id: reps_unit
+                            text: " Reps"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"Caption"
+                            size_hint_y:None
+                            height:20
+
+                        MDLabel:
+                            id: weight_mode_unit
+                            theme_text_color: "Primary"
+                            text: ""
+                            size_hint_y:None
+                            height:20
+                        MDLabel:
+                            id: best_month_weight_unit
+                            text: " Kg"
+                            theme_text_color: "Custom"
+                            text_color: 1,1,1,1
+                            font_style:"Caption"
+                            size_hint_y:None
+                            height:20

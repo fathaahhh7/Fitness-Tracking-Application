@@ -1,0 +1,228 @@
+#: include kv/homescreen.kv
+#: include kv/settingsscreen.kv
+#: include kv/blankscreen.kv
+#: include kv/workoutsscreen.kv
+#: include kv/sessionscreen.kv
+#: include kv/exercisescreen.kv
+#: include kv/workoutscreen.kv
+#: include kv/exercise_sessions_screen.kv
+#: include kv/previous_workouts_screen.kv
+#: include kv/exercise_stats_screen.kv
+#: include kv/welcome_screen.kv
+#:import utils kivy.utils
+
+#: include FirebaseLoginScreen/firebaseloginscreen.kv
+#:import Snackbar kivymd.uix.snackbar.Snackbar
+<SendMailContent>
+    orientation: "vertical"
+    spacing: "20dp"
+    size_hint_y: None
+    height: "150dp"
+    halign: "center"
+
+    MDTextFieldRect:
+        multiline: True
+        size_hint_y:0.7
+        hint_text: "Message"
+
+<AddWorkoutContent>
+    orientation: "vertical"
+    spacing: "20dp"
+    size_hint_y: None
+    height: "40dp"
+    MDTextField:
+        hint_text: "Workout name"
+        required: True
+        helper_text_mode: "on_error"
+        helper_text: "Enter valid name - English letters"
+        input_filter: app.proper_input_filter
+        on_text: app.text_input_length_filter(self, self.text, 12)
+
+<UpdateWeightContent>
+    orientation: "vertical"
+    spacing: "30dp"
+    size_hint_y: None
+    height: "100dp"
+    halign: "center"
+    GridLayout:
+        cols:2
+        rows:1
+        size_hint_y:0.5
+        MDLabel:
+            text:"Weight"
+            font_style: "H6"
+
+        MDTextButton:
+            id: weight_date
+            font_size: "15dp"
+            halign: "right"
+            text: app.weight_date
+            custom_color: utils.get_color_from_hex("#283592")
+            on_release:
+                app.show_date_picker_for_weight()
+            pos_hint: {"center_x": .5}
+
+    MDTextField:
+        id: weight
+        mode: "rectangle"
+#        input_filter: app.proper_number_filter
+        helper_text: "Kg" if app.units == "metric" else "Lbs"
+        helper_text_mode: "persistent"
+        input_filter: 'float'
+        font_size: "32.5sp"
+        pos_hint: {"center_x": .5}
+        size_hint: (.45, 6)
+        halign: "center"
+        text: ""
+        hint_text: "               "
+
+        on_text: app.input_number_check(self, self.text)
+
+
+
+<ChangeUserNameContent>
+    orientation: "vertical"
+    spacing: 0
+    size_hint_y: None
+    height: "48dp"
+    MDTextField:
+        hint_text: "User name"
+        input_filter: app.proper_input_filter
+
+    MDLabel:
+        text: ''
+        theme_text_color: "Custom"
+        text_color: 1, 0, 0, 1
+        font_style:"Caption"
+
+FloatLayout:
+    id: nav_layout
+    ScreenManager:
+        id: screen_manager
+
+        FirebaseLoginScreen:
+            id: firebase_login_screen
+            name: "loginscreen"
+            web_api_key: "AIzaSyB2OZaUuFaqCWDd9GX_Gt1lRdHF8H6ueHo"
+            on_login_success:
+                app.root = nav_layout
+                app.localId = self.localId
+                app.idToken = self.idToken
+                app.on_login()
+                bottom_nav.on_resize()
+
+        WelcomeScreen:
+            id: welcome_screen
+            name: "welcome_screen"
+
+        Screen:
+            name: "main_app_screen"
+            BoxLayout:
+                id: main_layout
+                orientation: 'vertical'
+#                canvas:
+#                    Rectangle:
+#                        id: top_canvas
+#                        pos: 0,app.window_size[1]/1.23
+#                        size: self.size[0],self.size[1]/5
+#                        source: "resources/loginback1.png"
+#                    Rectangle:
+#                        id: bottom_canvas
+#                        pos: self.pos
+#                        size: self.size[0],self.size[1]/8
+#                        source: "resources/loginback1.png"
+
+                CustomMDToolbar:
+                    id: toolbar
+                    title: "Hello Matan"
+                    elevation: 0
+                    right_action_items: [['', lambda x: None]]
+                    left_action_items: [["chevron-left", lambda x: app.back_to_last_screen()]]
+                    size_hint_y: 0.075
+                    round : "100dp"
+
+
+
+
+
+                ScreenManager:
+                    id: screen_manager1
+
+                    HomeScreen:
+                        id: homescreen
+                        name: "homescreen"
+
+                    WorkoutsScreen:
+                        id: workoutsscreen
+                        name: "workoutsscreen"
+
+                    ExerciseStatsScreen:
+                        id: exercise_stats_screen
+                        name: "exercise_stats_screen"
+
+                    SessionScreen:
+                        id: sessionscreen
+                        name: "sessionscreen"
+
+                    ExerciseScreen:
+                        id: exercisescreen
+                        name: "exercisescreen"
+
+                    ExerciseSessionsScreen:
+                        id: exercise_sessions_screen
+                        name: "exercise_sessions_screen"
+
+                    BlankScreen:
+                        id: blankscreen
+                        name: "blankscreen"
+
+                    SettingsScreen:
+                        id: settingsscreen
+                        name: "settingsscreen"
+
+                    WorkoutScreen:
+                        id: workoutscreen
+                        name: "workoutscreen"
+
+                    PreviousWorkoutsScreen:
+                        id: previous_workouts_screen
+                        name: "previous_workouts_screen"
+
+
+
+                MDBottomNavigation:
+                    id: bottom_nav
+                    pos_hint: {"center_x": .5}
+                    size_hint_y:0.09 if app.window_size[1]<1335 else 0.07
+                    size_hint_x:0.95
+                    panel_color: .5, .5, 1, 0
+                    text_color_active: 0,0,1,1
+                    MDBottomNavigationItem:
+                        id: 1
+                        name: '1'
+                        text: 'Dashboard'
+                        icon: 'home'
+                        on_tab_press: app.change_screen1("homescreen")
+
+                    MDBottomNavigationItem:
+                        id: 2
+                        name: '2'
+                        text: 'Workouts'
+                        icon: 'dumbbell'
+                        on_tab_press: app.change_screen1("workoutsscreen")
+
+                    MDBottomNavigationItem:
+                        id: 3
+
+                        name: '3'
+                        text: 'Recent'
+                        icon: 'calendar-clock'
+                        on_tab_press: app.change_screen1("previous_workouts_screen")
+
+                    MDBottomNavigationItem:
+                        id: 4
+                        name: '4'
+                        text: 'Account'
+                        icon: 'account'
+                        on_tab_press: app.change_screen1("settingsscreen")
+
