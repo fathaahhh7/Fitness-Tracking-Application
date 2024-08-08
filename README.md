@@ -41,4 +41,4 @@ improvements, and analyzing statistics.
 <!-- CONTACT -->
 ## CONTACT
 
-Matan Achiel, fathaah8@gmail.com
+Abdul Fathaah, fathaah8@gmail.com
